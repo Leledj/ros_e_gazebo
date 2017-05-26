@@ -1,0 +1,21 @@
+<launch>
+
+	<node pkg="turtlesim" 
+	      type="turtlesim_node"
+	      name="turtlesim" />
+	      
+	 <node pkg="simuladores"
+	       type="pubvel"
+	       name="publish_velocity" />
+	       
+	  <node pkg="simuladores"
+	        type="subpose"
+	        name="subscribe_to_pose"
+	        output="screen" />
+
+</launch>
+
+
+
+
+
