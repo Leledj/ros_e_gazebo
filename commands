@@ -1,0 +1,6 @@
+#!/bin/bash
+
+sudo apt-get install libgl1-mesa-dri libgl1-mesa-glx
+
+echo "source /home/viki/catkin_ws/devel/setup.bash" ~/.bashrc
+
