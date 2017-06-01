@@ -1,5 +1,13 @@
 # Introdução ao ROS e ao simulador Gazebo
-Esse repositório contém arquivos a serem utilizados nas aulas de simuladores envolvendo o ROS e o Gazebo. No início de cada aula, baixar e compilar os pacotes executando os seguintes comandos:
+Esse repositório contém arquivos a serem utilizados nas aulas de simuladores envolvendo o ROS e o Gazebo. 
+
+Uma única vez, execute os seguintes comandos:
+```
+echo "source /home/viki/catkin_ws/devel/setup.bash" > ~/.bashrc
+source ~/.bashrc
+```
+
+No início de cada aula, baixar e compilar os pacotes executando os seguintes comandos:
 ```
 cd ~
 sudo rm -r ros_e_gazebo

@@ -79,6 +79,120 @@
 	</gazebo>
 	
 	
+	<!-- Os dois trechos abaixo são muito parecidos e definem as rodas -->
+	<!-- direita e esquerda do robô, usando joints do tipo continuous -->
+	<!-- para criar o movimento de rotação em torno do eixo y -->
+	
+	<!-- LEFT WHEEL -->
+	
+	<joint name="left_wheel_hinge" type="continuous">
+	  <parent link="chassis"/>
+	  <child link="left_wheel"/>
+	  <origin xyz="0 0.125 0.1" rpy="0 0 0" />
+	  <axis xyz="0 1 0" rpy="0 0 0" /> <!-- Define que o movimento será em torno do eixo y -->
+	  <limit effort="100" velocity="100"/>
+	  <joint_properties damping="0.0" friction="0.0"/>
+	</joint>
+	
+	<link name="left_wheel">
+	  <collision>
+		<origin xyz="0 0 0" rpy="0 1.57 1.57" />
+		<geometry>
+		  <cylinder length="0.05" radius="0.1"/>
+		</geometry>
+	  </collision>
+
+	  <visual>
+		<origin xyz="0 0 0" rpy="0 1.57 1.57" />
+		<geometry>
+		  <cylinder length="0.05" radius="0.1"/>
+		</geometry>
+	  </visual>
+
+	  <inertial>
+		<origin xyz="0 0 0" rpy="0 1.57 1.57" />
+		<mass value="5"/>
+		<inertia ixx="0.0135" ixy="0" ixz="0" iyy="0.0135" iyz="0" izz="0.025" />
+	  </inertial>
+	</link>
+
+	<gazebo reference="left_wheel">
+	  <mu1 value="1.0"/>
+	  <mu2 value="1.0"/>
+	  <material>Gazebo/Black</material>
+	</gazebo>
+	
+	
+
+	<!-- RIGHT WHEEL -->
+	
+	<joint name="right_wheel_hinge" type="continuous">
+	  <parent link="chassis"/>
+	  <child link="right_wheel"/>
+	<origin xyz="0 -0.125 0.1" rpy="0 0 0" />
+	  <axis xyz="0 1 0" rpy="0 0 0" />  <!-- Define que o movimento será em torno do eixo y -->
+	  <limit effort="100" velocity="100"/>
+	  <joint_properties damping="0.0" friction="0.0"/>
+	</joint>
+	
+	<link name="right_wheel">
+	  <collision>
+		<origin xyz="0 0 0" rpy="0 1.57 1.57" />
+		<geometry>
+		  <cylinder length="0.05" radius="0.1"/>
+		</geometry>
+	  </collision>
+
+	  <visual>
+		<origin xyz="0 0 0" rpy="0 1.57 1.57" />
+		<geometry>
+		  <cylinder length="0.05" radius="0.1"/>
+		</geometry>
+	  </visual>
+
+	  <inertial>
+		<origin xyz="0 0 0" rpy="0 1.57 1.57" />
+		<mass value="5"/>
+		<inertia ixx="0.0135" ixy="0" ixz="0" iyy="0.0135" iyz="0" izz="0.025" />
+	  </inertial>
+	</link>
+
+	<gazebo reference="right_wheel">
+	  <mu1 value="1.0"/>
+	  <mu2 value="1.0"/>
+	  <material>Gazebo/Black</material>
+	</gazebo>
+	
+	
+	<!-- DIFFERENTIAL DRIVE -->
+	
+	<!-- Aqui vamos carregar um plugin que implementa o controle do robô diferencial
+	     Esse plugin vai criar dois tópicos:
+	     /mybot/cmd_vel: Onde mensagens do tipo geometry_msgs/Twist devem ser publicadas
+	         para mover o robô;
+	     /mybot/odom: Onde o gazebo publica mensagens do tipo nav_msgs/Odometry que representam
+	         a posição estimada do robô;
+	     Note que os nomes desses tópicos podem ser configurados como parâmetros, além de outras
+	     características do controlador como taxa de atualização e torque. Alguns dados como o
+	     diâmetro das rodas e distância entre elas são necessários para o funcionamento do plugin.
+	-->
+		
+	<gazebo>
+	  <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+		<alwaysOn>true</alwaysOn>
+		<updateRate>100</updateRate>
+		<leftJoint>left_wheel_hinge</leftJoint>
+		<rightJoint>right_wheel_hinge</rightJoint>
+		<wheelSeparation>0.25</wheelSeparation>
+		<wheelDiameter>0.2</wheelDiameter>
+		<torque>20</torque>
+		<commandTopic>mybot/cmd_vel</commandTopic>
+		<odometryTopic>mybot/odom</odometryTopic>
+		<odometryFrame>odom</odometryFrame>
+		<robotBaseFrame>footprint</robotBaseFrame>
+	  </plugin>
+	</gazebo>
+	
 	
 
 </robot>
