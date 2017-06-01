@@ -1,0 +1,15 @@
+<!-- Esse é um arquivo world básico que vamos utilizar para simular o robô diferencial -->
+<?xml version="1.0"?>
+<sdf version="1.4">
+	<world name="myworld">
+		
+		<include>
+			<uri>model://sun</uri>
+		</include>
+		
+		<include>
+			<uri>model://ground_plane</uri>
+		</include>
+		
+	</world>
+</sdf>

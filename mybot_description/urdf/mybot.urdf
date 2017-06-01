@@ -1,0 +1,84 @@
+<!-- Esse arquivo define o modelo de um robô diferencial chamado "mybot" -->
+
+<?xml version=”1.0”?>
+<robot name=”mybot”>
+	
+	<!-- FOOTPRINT -->
+	<!-- Esse link é necessário pois o Gazebo não aceita que o link raiz possua inércia. -->
+
+	<link name="footprint"/>
+
+	<joint name="base_joint" type="fixed">
+	  <parent link="footprint"/>
+	  <child link="chassis"/>
+	</joint>	
+	
+
+	<!-- CHASSIS -->
+	<!-- Esse é o corpo do robô -->
+
+	<link name='chassis'>
+	  <collision> 
+	    <origin xyz="0 0 0.1" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="0.4 0.2 0.1"/> 
+	    </geometry> 
+	  </collision>
+	  <visual> 
+	    <origin xyz="0 0 0.1" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="0.4 0.2 0.1"/> 
+	    </geometry>
+	  </visual>
+	  <inertial> 
+	    <origin xyz="0 0 0.1" rpy="0 0 0"/> 
+	    <mass value="50"/> 
+	    <inertia ixx="0.208" ixy="0" ixz="0" iyy="0.708" iyz="0" izz="0.708"/>
+	  </inertial>
+	</link>
+	
+	<gazebo reference="chassis">
+	  <material>Gazebo/Orange</material>
+	</gazebo>
+	
+
+	<!-- CASTER WHEEL -->
+	<!-- A caster wheel é representada de forma aproximada por uma esfera -->
+	
+	<joint name="fixed" type="fixed">
+	  <parent link="chassis"/>
+	  <child link="caster_wheel"/>
+	</joint>
+
+	<link name="caster_wheel">
+	  <collision>
+		<origin xyz="-0.15 0 0.05" rpy="0 0 0"/>
+		<geometry>
+		  <sphere radius="0.05"/>
+		</geometry>
+	  </collision>
+	  
+	  <visual>
+		<origin xyz="-0.15 0 0.05" rpy="0 0 0"/>
+		<geometry>
+		  <sphere radius="0.05"/>
+		</geometry>
+	  </visual>
+
+	  <inertial>
+		<origin xyz="-0.15 0 0.05" rpy="0 0 0"/>
+		<mass value="5"/>
+		<inertia ixx="0.005" ixy="0" ixz="0" iyy="0.005" iyz="0" izz="0.005" />
+	  </inertial>
+	</link>
+	
+	<gazebo reference="caster_wheel">
+	  <mu1>0.0</mu1>
+	  <mu2>0.0</mu2>
+	  <material>Gazebo/Red</material>
+	</gazebo>
+	
+	
+	
+
+</robot>

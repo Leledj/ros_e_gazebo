@@ -1,0 +1,21 @@
+<launch>
+
+	<!-- 
+		Chamar o nó "spawn_model" do pacote gazebo_ros, que recebe um modelo URDF ou SDF  
+	    e tenta carregar aquele modelo dentro do Gazebo. No nosso caso, estamos passando
+	    para ele o modelo "mybot.urdf"
+	-->
+	<node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+	 args="-file $(find mybot_description)/urdf/mybot.urdf -urdf -model mybot" />
+
+	<!-- 
+		Incluir o arquivo "empty_world.launch" do pacote gazebo_ros. Esse arquivo inicia
+		o Gazebo e cria a comunicação com o ROS. Para abrir o nosso mundo "mybot.world"
+		passamos seu endereço como argumento "world_name"
+	-->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="world_name" value="$(find mybot_gazebo)/worlds/mybot.world" />
+		<arg name="gui" value="true" />
+	</include>
+	
+</launch>

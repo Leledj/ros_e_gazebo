@@ -1,0 +1,25 @@
+<?xml version=”1.0”?>
+<robot name=”mybot”>
+
+	<link name='chassis'>
+	  <collision> 
+	    <origin xyz="0 0 0.1" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="0.4 0.2 0.1"/> 
+	    </geometry> 
+	  </collision>
+	  <visual> 
+	    <origin xyz="0 0 0.1" rpy="0 0 0"/> 
+	    <geometry> 
+	      <box size="0.4 0.2 0.1"/> 
+	    </geometry> 
+	    <material name="orange"/>
+	  </visual>
+	  <inertial> 
+	    <origin xyz="0 0 0.1" rpy="0 0 0"/> 
+	    <mass value="50"/> 
+	    <box_inertia m="50" x="0.4" y="0.2" z="0.1"/>
+	  </inertial>
+	</link>
+
+</robot>
