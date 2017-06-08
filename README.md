@@ -18,6 +18,8 @@ cd ~/catkin_ws
 catkin_make
 ```
 
-Link para fazer download da máquina virtual:
+## Máquina Virtual
+
+Para fazer os exercícios e testes em casa, fazer o download da máquina virtual no site:
 
 http://nootrix.com/downloads/#RosVM
