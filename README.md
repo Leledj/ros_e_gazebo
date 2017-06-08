@@ -17,3 +17,7 @@ cp -r ~/ros_e_gazebo/src ~/catkin_ws/
 cd ~/catkin_ws
 catkin_make
 ```
+
+Link para fazer download da máquina virtual:
+
+http://nootrix.com/downloads/#RosVM
