@@ -4,11 +4,10 @@
 	<node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
 	 args="-file $(find mybot_description)/urdf/mybot.urdf -urdf -model mybot" />
 
+	<!-- Iniciar o Gazebo carregando o mundo preparado para o trabalho -->
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">
-		<arg name="world_name" value="$(find mybot_gazebo)/worlds/mybot.world" />
+		<arg name="world_name" value="$(find mybot_gazebo)/worlds/trabalho_final.world" />
 		<arg name="gui" value="true" />
 	</include>
-	
-	
 	
 </launch>

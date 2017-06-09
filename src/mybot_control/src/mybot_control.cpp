@@ -9,8 +9,8 @@
 // Definir algumas variáveis globais.
 
 // Inicializar as coordenadas do objetivo com valores arbitrários.
-double goalX = 8.0;
-double goalY = 5.0;
+double goalX = 20.0;
+double goalY = 20.0;
 
 // Variáveis para armazenar os comandos de velocidade.
 double velLinear = 0.0;
@@ -39,8 +39,7 @@ void odomCallback(const nav_msgs::Odometry& msg)
 		// Decidir quais valores de velocidade o robô deve
 		// assumir para se mover em direção ao objetivo
 		velLinear = (d > 1.0) ? 1.0 : d;
-		velAngular = theta - atan2( goalY - y, goalX - x);	
-		//velAngular = 0.01;	
+		velAngular = theta - atan2( goalY - y, goalX - x);
 	}
 	else 
 	{

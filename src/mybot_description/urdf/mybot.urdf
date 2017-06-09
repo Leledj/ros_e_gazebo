@@ -1,10 +1,7 @@
-<!-- Esse arquivo define o modelo de um robô diferencial chamado "mybot" -->
-
 <?xml version=”1.0”?>
 <robot name=”mybot”>
 	
 	<!-- FOOTPRINT -->
-	<!-- Esse link é necessário pois o Gazebo não aceita que o link raiz possua inércia. -->
 
 	<link name="footprint"/>
 
@@ -15,7 +12,6 @@
 	
 
 	<!-- CHASSIS -->
-	<!-- Esse é o corpo do robô -->
 
 	<link name='chassis'>
 	  <collision> 
@@ -43,7 +39,6 @@
 	
 
 	<!-- CASTER WHEEL -->
-	<!-- A caster wheel é representada de forma aproximada por uma esfera -->
 	
 	<joint name="fixed" type="fixed">
 	  <parent link="chassis"/>
@@ -79,17 +74,14 @@
 	</gazebo>
 	
 	
-	<!-- Os dois trechos abaixo são muito parecidos e definem as rodas -->
-	<!-- direita e esquerda do robô, usando joints do tipo continuous -->
-	<!-- para criar o movimento de rotação em torno do eixo y -->
 	
 	<!-- LEFT WHEEL -->
 	
 	<joint name="left_wheel_hinge" type="continuous">
 	  <parent link="chassis"/>
 	  <child link="left_wheel"/>
-	  <origin xyz="0 0.125 0.1" rpy="0 0 0" />
-	  <axis xyz="0 1 0" rpy="0 0 0" /> <!-- Define que o movimento será em torno do eixo y -->
+	<origin xyz="0 0.125 0.1" rpy="0 0 0" />
+	  <axis xyz="0 1 0" rpy="0 0 0" />
 	  <limit effort="100" velocity="100"/>
 	  <joint_properties damping="0.0" friction="0.0"/>
 	</joint>
@@ -130,7 +122,7 @@
 	  <parent link="chassis"/>
 	  <child link="right_wheel"/>
 	<origin xyz="0 -0.125 0.1" rpy="0 0 0" />
-	  <axis xyz="0 1 0" rpy="0 0 0" />  <!-- Define que o movimento será em torno do eixo y -->
+	  <axis xyz="0 1 0" rpy="0 0 0" />
 	  <limit effort="100" velocity="100"/>
 	  <joint_properties damping="0.0" friction="0.0"/>
 	</joint>
@@ -163,20 +155,6 @@
 	  <material>Gazebo/Black</material>
 	</gazebo>
 	
-	
-	<!-- DIFFERENTIAL DRIVE -->
-	
-	<!-- Aqui vamos carregar um plugin que implementa o controle do robô diferencial
-	     Esse plugin vai criar dois tópicos:
-	     /mybot/cmd_vel: Onde mensagens do tipo geometry_msgs/Twist devem ser publicadas
-	         para mover o robô;
-	     /mybot/odom: Onde o gazebo publica mensagens do tipo nav_msgs/Odometry que representam
-	         a posição estimada do robô;
-	     Note que os nomes desses tópicos podem ser configurados como parâmetros, além de outras
-	     características do controlador como taxa de atualização e torque. Alguns dados como o
-	     diâmetro das rodas e distância entre elas são necessários para o funcionamento do plugin.
-	-->
-		
 	<gazebo>
 	  <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
 		<alwaysOn>true</alwaysOn>
@@ -192,7 +170,77 @@
 		<robotBaseFrame>footprint</robotBaseFrame>
 	  </plugin>
 	</gazebo>
-	
-	
+	 
+	 
+	 
+	 <!-- LASER -->
+	<joint name="laser_joint" type="fixed">
+		<origin xyz="0.15 0 0.2" rpy="0 0 0"/>
+		<parent link="chassis"/>
+		<child link="laser_link"/>
+	</joint>
+
+	<link name="laser_link">
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="0.1 0.1 0.1"/>
+			</geometry>
+		</collision>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="0.1 0.1 0.1"/>
+			</geometry>
+		</visual>
+
+		<inertial>
+			<mass value="1e-5" />
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+		</inertial>
+	</link>
+	 
+	 
+	<gazebo reference="laser_link">
+		<sensor type="ray" name="laser">
+			<pose>0 0 0 0 0 0</pose>
+			<visualize>true</visualize>
+			<update_rate>40</update_rate>
+			<ray>
+				<scan>
+					<horizontal>
+						<samples>8</samples>
+						<resolution>1</resolution>
+						<min_angle>-3.14159</min_angle>
+						<max_angle>3.14159</max_angle>
+					</horizontal>
+				</scan>
+				<range>
+					<min>0.10</min>
+					<max>10.0</max>
+					<resolution>0.01</resolution>
+				</range>
+			</ray>
+			<plugin name="laser_controller" filename="libgazebo_ros_laser.so">
+				<topicName>mybot/scan</topicName>
+				<frameName>base_link</frameName>
+			</plugin>
+		</sensor>
+	</gazebo>
 
 </robot>
+
+
+
+
+
+
+
+
+
+
+
+
+
